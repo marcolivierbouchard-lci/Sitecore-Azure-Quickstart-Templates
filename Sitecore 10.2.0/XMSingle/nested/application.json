@@ -19,7 +19,6 @@
     "infrastructure": {
       "type": "secureObject",
       "defaultValue": {
-        "authCertificateThumbprint": null,
         "siWebAppHostName": null,
         "singleWebAppHostName": null,
         "sqlServerFqdn": null
@@ -166,11 +165,6 @@
       "minLength": 1,
       "defaultValue": "[concat(parameters('deploymentId'), '-si')]"
     },
-    "authCertificateThumbprint": {
-      "type": "string",
-      "minLength": 8,
-      "defaultValue": "[parameters('infrastructure').authCertificateThumbprint]"
-    },
     "singleMsDeployPackageUrl": {
       "type": "securestring",
       "minLength": 1
@@ -217,7 +211,6 @@
             "setParameters": {
                 "IIS Web Application Name": "[variables('siWebAppNameTidy')]",
                 "Security Connection String": "[concat('Encrypt=True;TrustServerCertificate=False;Data Source=', variables('sqlServerFqdnTidy'), ',1433;Initial Catalog=',variables('coreSqlDatabaseNameTidy'),';User Id=', parameters('coreSqlDatabaseUserName'), ';Password=', parameters('coreSqlDatabasePassword'), ';')]",
-                "CertificateThumbprint": "[parameters('authCertificateThumbprint')]",
                 "CertificateStoreLocation": "CurrentUser",
                 "PasswordRecoveryUrl": "[concat('https://', parameters('singleWebAppHostName'))]",
                 "Application Insights Instrumentation Key": "[if(parameters('useApplicationInsights'), reference(resourceId('Microsoft.Insights/Components', variables('applicationInsightsNameTidy')), variables('applicationInsightsApiVersion')).InstrumentationKey, '')]",
@@ -238,7 +231,6 @@
       "apiVersion": "[variables('webApiVersion')]",
       "properties": {
         "WEBSITE_DYNAMIC_CACHE": 0,
-        "WEBSITE_LOAD_CERTIFICATES": "[parameters('authCertificateThumbprint')]",
         "SITECORE_ENVIRONMENT_TYPE": "[parameters('environmentType')]"
       }
     },
