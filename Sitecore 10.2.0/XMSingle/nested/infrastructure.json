@@ -412,22 +412,6 @@
       }
     },
     {
-      "type": "Microsoft.Web/certificates",
-      "name": "[variables('authCertificateNameTidy')]",
-      "apiVersion": "[variables('certificateApiVersion')]",
-      "location": "[parameters('location')]",
-      "dependsOn": [
-        "[resourceId('Microsoft.Web/serverfarms', variables('singleHostingPlanNameTidy'))]"
-      ],
-      "properties": {
-        "password": "[parameters('authCertificatePassword')]",
-        "pfxBlob": "[parameters('authCertificateBlob')]"
-      },
-      "tags": {
-        "provider": "[variables('sitecoreTags').provider]"
-      }
-    },
-    {
       "type": "Microsoft.Insights/Components/CurrentBillingFeatures",
       "condition": "[parameters('useApplicationInsights')]",
       "name": "[concat(variables('applicationInsightsNameTidy'), '/', variables('applicationInsightsPricePlanTidy'))]",
